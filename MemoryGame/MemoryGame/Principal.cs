@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MemoryGame
 {
-    static class Program
+    static class Principal
     {
         /// <summary>
         /// Ponto de entrada principal para o aplicativo.
@@ -14,9 +15,14 @@ namespace MemoryGame
         [STAThread]
         static void Main()
         {
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(new Inicio());
+            if (Directory.Exists(@"temp"))
+            {
+                Directory.Delete(@"temp", true);
+            }
         }
     }
 }

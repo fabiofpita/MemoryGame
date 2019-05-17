@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MemoryGame.Controller;
+using MemoryGame.GoogleAPI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,12 +12,11 @@ using System.Windows.Forms;
 
 namespace MemoryGame
 {
-    public partial class Main : Form
+    public partial class Inicio : Form
     {
-        public Main()
+        public Inicio()
         {
             InitializeComponent();
-            
         }
 
         private void btnClose_Click(object sender, EventArgs e)

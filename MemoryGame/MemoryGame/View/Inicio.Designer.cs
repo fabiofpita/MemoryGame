@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace MemoryGame
 {
-    partial class Main
+    partial class Inicio
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -31,7 +31,7 @@ namespace MemoryGame
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
             this.label1 = new System.Windows.Forms.Label();
             this.rblFacil = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
