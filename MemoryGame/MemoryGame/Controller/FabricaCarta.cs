@@ -18,7 +18,7 @@ namespace MemoryGame.Controller
     {
         public static List<Carta> GetCartas(string tema, int qtdeCartas)
         {
-            List<Dictionary<String, String>> imagens = ImageController.GetDadosImagens(tema, qtdeCartas);
+            List<Dictionary<String, String>> imagens = ImageController.GetDadosImagens(tema, qtdeCartas/2);
             List<Carta> cartas = new List<Carta>();
             Carta aux;
             Carta copia;
@@ -28,11 +28,13 @@ namespace MemoryGame.Controller
             {
                 aux = new Carta();
                 aux.Id = x + 1;
-                aux.Imagem = Image.FromFile(@"temp\imagem" + (x + 1) + "." + imagens[x]["Formato"]);
+                aux.Imagem = @"temp\imagem" + (x + 1) + "." + imagens[x]["Formato"];
                 aux.IdPar = x + 1;
 
-                copia = aux;
-                copia.Id = (x + 1) * 2;
+                copia = new Carta();
+                copia.Imagem = aux.Imagem;
+                copia.IdPar = x + 1;
+                copia.Id = (x + 1) + imagens.Count;
 
                 cartas.Add(aux);
                 cartas.Add(copia);

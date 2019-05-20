@@ -9,8 +9,8 @@ namespace MemoryGame.Entidade
 {
     class Carta
     {
-        private Image imagem;
-        public Image Imagem
+        private string imagem;
+        public string Imagem
         {
             get
             {

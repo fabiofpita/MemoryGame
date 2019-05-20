@@ -17,11 +17,48 @@ namespace MemoryGame
         public Inicio()
         {
             InitializeComponent();
+            rblFacil.Checked = true;
+            txtTema.Text = "";
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+        private void btnJogar_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(txtTema.Text))
+            {
+                focus = true;
+                this.Refresh();
+            }
+            else
+            {
+                this.Hide();
+                if (rblFacil.Checked)
+                {
+                    Facil facil = new Facil(txtTema.Text, 12);
+                }
+            }
+        }
+
+        bool focus = false;
+        private void Inicio_Paint(object sender, PaintEventArgs e)
+        {
+            if (focus)
+            {
+                txtTema.BorderStyle = BorderStyle.None;
+                Pen p = new Pen(Color.Red);
+                Graphics g = e.Graphics;
+                int variance = 3;
+                g.DrawRectangle(p, new Rectangle(txtTema.Location.X - variance, txtTema.Location.Y - variance, txtTema.Width + variance, txtTema.Height + variance));
+            }
+            else
+            {
+                txtTema.BorderStyle = BorderStyle.FixedSingle;
+            }
+        }
+
     }
 }

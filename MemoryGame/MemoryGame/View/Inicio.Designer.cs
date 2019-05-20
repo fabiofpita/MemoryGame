@@ -34,13 +34,14 @@ namespace MemoryGame
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inicio));
             this.label1 = new System.Windows.Forms.Label();
             this.rblFacil = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.rblMedio = new System.Windows.Forms.RadioButton();
+            this.rblDificil = new System.Windows.Forms.RadioButton();
+            this.txtTema = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnJogar = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            
             // 
             // label1
             // 
@@ -64,37 +65,37 @@ namespace MemoryGame
             this.rblFacil.Text = "Fácil";
             this.rblFacil.UseVisualStyleBackColor = true;
             // 
-            // radioButton2
+            // rblMedio
             // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(260, 324);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(70, 25);
-            this.radioButton2.TabIndex = 2;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Médio";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rblMedio.AutoSize = true;
+            this.rblMedio.Location = new System.Drawing.Point(260, 324);
+            this.rblMedio.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.rblMedio.Name = "rblMedio";
+            this.rblMedio.Size = new System.Drawing.Size(70, 25);
+            this.rblMedio.TabIndex = 2;
+            this.rblMedio.TabStop = true;
+            this.rblMedio.Text = "Médio";
+            this.rblMedio.UseVisualStyleBackColor = true;
             // 
-            // radioButton3
+            // rblDificil
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(260, 359);
-            this.radioButton3.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(71, 25);
-            this.radioButton3.TabIndex = 3;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Difícil";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.rblDificil.AutoSize = true;
+            this.rblDificil.Location = new System.Drawing.Point(260, 359);
+            this.rblDificil.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.rblDificil.Name = "rblDificil";
+            this.rblDificil.Size = new System.Drawing.Size(71, 25);
+            this.rblDificil.TabIndex = 3;
+            this.rblDificil.TabStop = true;
+            this.rblDificil.Text = "Difícil";
+            this.rblDificil.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtTema
             // 
-            this.textBox1.Location = new System.Drawing.Point(217, 225);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(182, 29);
-            this.textBox1.TabIndex = 4;
+            this.txtTema.Location = new System.Drawing.Point(217, 225);
+            this.txtTema.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.txtTema.Name = "txtTema";
+            this.txtTema.Size = new System.Drawing.Size(182, 29);
+            this.txtTema.TabIndex = 4;
             // 
             // label2
             // 
@@ -117,6 +118,7 @@ namespace MemoryGame
             this.btnJogar.TabIndex = 6;
             this.btnJogar.Text = "JOGAR";
             this.btnJogar.UseVisualStyleBackColor = false;
+            this.btnJogar.Click += new System.EventHandler(this.btnJogar_Click);
             // 
             // btnClose
             // 
@@ -132,7 +134,7 @@ namespace MemoryGame
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // Main
+            // Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,18 +143,19 @@ namespace MemoryGame
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnJogar);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.txtTema);
+            this.Controls.Add(this.rblDificil);
+            this.Controls.Add(this.rblMedio);
             this.Controls.Add(this.rblFacil);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("SF Slapstick Comic", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5);
-            this.Name = "Main";
+            this.Name = "Inicio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Jogo da Memória";
+            this.Paint += new PaintEventHandler(this.Inicio_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -162,9 +165,9 @@ namespace MemoryGame
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RadioButton rblFacil;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.RadioButton rblMedio;
+        private System.Windows.Forms.RadioButton rblDificil;
+        private System.Windows.Forms.TextBox txtTema;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnJogar;
         private System.Windows.Forms.Button btnClose;
