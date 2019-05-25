@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,8 @@ namespace MemoryGame
         private int qtdeCartas;
         private static int counter = 0;
         private Loading loadingScreen;
+        private List<Carta> cartas;
+        private ControlerGame controler;
         public Facil(string tema, int qtdeCartas)
         {
             this.tema = tema;
@@ -35,8 +38,8 @@ namespace MemoryGame
             await Task.Run(() =>
             {
                 CartaUtil cartaUtil = new CartaUtil();
-                List<Carta> cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas);
-
+                cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas);
+                controler = new ControlerGame(cartas);
                 for (var x = 0; x < cartas.Count; x++)
                 {
                     PictureBox picture = (PictureBox)this.Controls.Find("pictureBox_" + cartas[x].Id, false)[0];
@@ -57,7 +60,7 @@ namespace MemoryGame
                 botao = (Button)this.Controls.Find("button_" + x, false)[0];
                 picture = (PictureBox)this.Controls.Find("pictureBox_" + x, false)[0];
                 botao.Visible = true;
-                picture.Visible = false;
+                picture.Visible = true;
             }
         }
 
@@ -68,9 +71,40 @@ namespace MemoryGame
             botao.Visible = false;
 
             var id = botao.Name.Split('_')[1];
+            var id1 = "";
 
             PictureBox picture = (PictureBox)this.Controls.Find("pictureBox_" + id, false)[0];
             picture.Visible = true;
+            //picture.Enabled = false;
+            botao.Enabled = false;
+
+            if (!controler.selecionouImagem(Convert.ToInt32(id)))
+            {
+
+                id1 = Convert.ToString(controler.getResposta().Id);
+
+                Thread.Sleep(800);
+
+                desabilitarCartas(id, id1);
+            }
+        }
+        private void desabilitarCartas(String img1, String img2)
+        {
+            Button botao1 = (Button)this.Controls.Find("button_" + img1, false)[0];
+            PictureBox picture1 = (PictureBox)this.Controls.Find("pictureBox_" + img1, false)[0];
+            Button botao2 = (Button)this.Controls.Find("button_" + img2, false)[0];
+            PictureBox picture2 = (PictureBox)this.Controls.Find("pictureBox_" + img2, false)[0];
+
+            botao1.Visible = true;
+            botao1.Enabled = true;
+            //picture1.Visible = false;
+            picture1.Enabled = true;
+
+            botao2.Visible = true;
+            botao2.Enabled = true;
+            //picture2.Visible = false;
+            picture1.Enabled = true;
+
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -105,12 +139,12 @@ namespace MemoryGame
         {
             PictureBox picture = (PictureBox)sender;
 
-            picture.Visible = false;
+            //picture.Visible = false;
 
             var id = picture.Name.Split('_')[1];
 
             Button botao = (Button)this.Controls.Find("button_" + id, false)[0];
-            botao.Visible = true;
+            //botao.Visible = true;
         }
     }
 }
