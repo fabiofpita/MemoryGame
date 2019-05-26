@@ -53,7 +53,7 @@ namespace MemoryGame.Controller
         }
 
         public Boolean ganhou() {
-            return (valores == cartas.Count());
+            return ((valores * 2) == cartas.Count());
         }
 
         public int getJogadas() {
