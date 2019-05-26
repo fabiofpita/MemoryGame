@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MemoryGame.Controller
@@ -13,6 +14,7 @@ namespace MemoryGame.Controller
         private int valores;
         private Carta escolha1;
         private Carta escolha2;
+        private Carta resposta;
         private List<Carta> cartas;
         public ControlerGame(List<Carta> cartas) {
             escolha1 = null;
@@ -31,6 +33,7 @@ namespace MemoryGame.Controller
             if (escolha1 == null)
             {
                 escolha1 =  getCarta(cartaEscolhida);
+                resposta = escolha1;
             }
             else {
                 escolha2 = getCarta(cartaEscolhida);
@@ -41,20 +44,32 @@ namespace MemoryGame.Controller
                         retorno = false;
                     }
                 }
-                escolha2 = escolha1;
+                escolha2 = null;
                 escolha1 = null;
-         
+                valores += 2;
             }
 
             return retorno;
         }
 
+        public Boolean ganhou() {
+            return (valores == cartas.Count());
+        }
+
+        public int getJogadas() {
+            return valores;
+        }
+
         public Carta getResposta() {
-            return escolha2;
+            return resposta;
         }
 
         private Carta getCarta(int id) {
             return cartas.Find(x => x.Id ==id); 
+        }
+
+        public void pause() {
+            Thread.Sleep(1000);
         }
     }
 }

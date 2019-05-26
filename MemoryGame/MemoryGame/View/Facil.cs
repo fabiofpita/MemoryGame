@@ -22,6 +22,9 @@ namespace MemoryGame
         private Loading loadingScreen;
         private List<Carta> cartas;
         private ControlerGame controler;
+        private Boolean iniciou;
+        private int segundo;
+        private int minuto;
         public Facil(string tema, int qtdeCartas)
         {
             this.tema = tema;
@@ -31,6 +34,9 @@ namespace MemoryGame
             loadingScreen.Show();
             CarregarCartas();
             OcultarImagens();
+            iniciou = false;
+            segundo = 0;
+            minuto = 0;
         }
 
         private async Task CarregarCartas()
@@ -61,31 +67,48 @@ namespace MemoryGame
                 picture = (PictureBox)this.Controls.Find("pictureBox_" + x, false)[0];
                 botao.Visible = true;
                 picture.Visible = true;
+                picture.Enabled = true;
             }
         }
 
         private void ClickBotao(object sender, EventArgs e)
         {
+
+            if (!iniciou) {
+                timer1.Enabled = true;
+                iniciou = true;
+            }
+
             Button botao = (Button)sender;
 
             botao.Visible = false;
-
+            botao.Enabled = false;
             var id = botao.Name.Split('_')[1];
             var id1 = "";
 
             PictureBox picture = (PictureBox)this.Controls.Find("pictureBox_" + id, false)[0];
             picture.Visible = true;
-            //picture.Enabled = false;
-            botao.Enabled = false;
+            picture.Enabled = false;
 
+            Refresh();
             if (!controler.selecionouImagem(Convert.ToInt32(id)))
             {
 
                 id1 = Convert.ToString(controler.getResposta().Id);
+                atualizarJogadas(controler.getJogadas());
 
-                Thread.Sleep(800);
+                controler.pause();
 
                 desabilitarCartas(id, id1);
+            }
+
+            vitoria();
+        }
+
+        private void vitoria() {
+
+            if (controler.ganhou()) {
+                timer1.Stop();
             }
         }
         private void desabilitarCartas(String img1, String img2)
@@ -97,14 +120,15 @@ namespace MemoryGame
 
             botao1.Visible = true;
             botao1.Enabled = true;
-            //picture1.Visible = false;
+            picture1.Visible = false;
             picture1.Enabled = true;
 
             botao2.Visible = true;
             botao2.Enabled = true;
-            //picture2.Visible = false;
+            picture2.Visible = false;
             picture1.Enabled = true;
 
+            Refresh();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -135,16 +159,45 @@ namespace MemoryGame
             }
         }
 
+        private void atualizarJogadas(int valor) {
+            Label variavel = (Label)this.Controls.Find("Contador", false)[0];
+            variavel.Text = Convert.ToString(valor);
+        }
+
         private void pictureBoxClick(object sender, EventArgs e)
         {
             PictureBox picture = (PictureBox)sender;
 
-            //picture.Visible = false;
+            picture.Visible = false;
 
             var id = picture.Name.Split('_')[1];
 
             Button botao = (Button)this.Controls.Find("button_" + id, false)[0];
-            //botao.Visible = true;
+            botao.Visible = true;
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            segundo += 1;
+
+            String tempoMin = "" + minuto;
+            String tempoSeg = "" + segundo;
+
+            if (segundo < 10)
+            {
+                tempoSeg = "0" + segundo;
+            }
+            else if (segundo == 60) {
+                tempoSeg = "00";
+                segundo = 0;
+                minuto += 1;
+            }
+
+            if (minuto < 10) {
+                tempoMin = "0" + minuto;
+            }
+
+            Tempo.Text = tempoMin + ":" + tempoSeg;
         }
     }
 }

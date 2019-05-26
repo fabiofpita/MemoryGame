@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button_3 = new System.Windows.Forms.Button();
@@ -55,6 +56,9 @@
             this.pictureBox_11 = new System.Windows.Forms.PictureBox();
             this.pictureBox_12 = new System.Windows.Forms.PictureBox();
             this.btnClose = new System.Windows.Forms.Button();
+            this.Contador = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.Tempo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_3)).BeginInit();
@@ -343,12 +347,38 @@
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // Contador
+            // 
+            this.Contador.AutoSize = true;
+            this.Contador.Location = new System.Drawing.Point(398, 36);
+            this.Contador.Name = "Contador";
+            this.Contador.Size = new System.Drawing.Size(24, 25);
+            this.Contador.TabIndex = 28;
+            this.Contador.Text = "0";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            // 
+            // Tempo
+            // 
+            this.Tempo.AutoSize = true;
+            this.Tempo.Enabled = false;
+            this.Tempo.Location = new System.Drawing.Point(135, 36);
+            this.Tempo.Name = "Tempo";
+            this.Tempo.Size = new System.Drawing.Size(67, 25);
+            this.Tempo.TabIndex = 29;
+            this.Tempo.Text = "00:00";
+            // 
             // Facil
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Yellow;
             this.ClientSize = new System.Drawing.Size(650, 585);
+            this.Controls.Add(this.Tempo);
+            this.Controls.Add(this.Contador);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.button_9);
             this.Controls.Add(this.button_10);
@@ -428,5 +458,8 @@
         private System.Windows.Forms.PictureBox pictureBox_11;
         private System.Windows.Forms.PictureBox pictureBox_12;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label Contador;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label Tempo;
     }
 }
