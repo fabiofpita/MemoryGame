@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\CartaUtil.cs" />
+    <Compile Include="Controller\ControlerGame.cs" />
     <Compile Include="Controller\FabricaCarta.cs" />
     <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Entidade\Carta.cs" />
