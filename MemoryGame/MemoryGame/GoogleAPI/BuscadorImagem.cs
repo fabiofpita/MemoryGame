@@ -10,6 +10,7 @@ using Google.Apis.Customsearch.v1.Data;
 using Google.Apis.Services;
 using MemoryGame.Entidade;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace MemoryGame.GoogleAPI
 {
@@ -28,29 +29,50 @@ namespace MemoryGame.GoogleAPI
 
         public List<Dictionary<String, String>> Search(string query, int qtdeResultado)
         {
-            var service = new CustomsearchService(new BaseClientService.Initializer
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            try
             {
-                ApplicationName = "MemoryGame",
-                ApiKey = credenciais.ApiKey,
-            });
+                var service = new CustomsearchService(new BaseClientService.Initializer
+                {
+                    ApplicationName = "MemoryGame",
+                    ApiKey = credenciais.ApiKey,
+                });
 
-            var lisRequest = service.Cse.List(query);
-            lisRequest.Cx = credenciais.CustomSearchId;
-            lisRequest.Num = qtdeResultado;
-            lisRequest.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
-            lisRequest.ImgSize = CseResource.ListRequest.ImgSizeEnum.Huge;
-            var results = lisRequest.Execute();
+                var lisRequest = service.Cse.List(query);
+                lisRequest.Cx = credenciais.CustomSearchId;
+                lisRequest.Num = qtdeResultado;
+                lisRequest.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
+                lisRequest.ImgSize = CseResource.ListRequest.ImgSizeEnum.Xlarge;
+                var results = lisRequest.Execute();
 
-            List<Dictionary<String, String>> imagens = new List<Dictionary<String, String>>();
-            foreach (Result item in results.Items)
-            {
-                var aux = new Dictionary<String, String>();
-                aux.Add("Url", item.Link);
-                aux.Add("Formato", item.Mime.Split('/')[1]);
-                imagens.Add(aux);
+                List<Dictionary<String, String>> imagens = new List<Dictionary<String, String>>();
+                foreach (Result item in results.Items)
+                {
+                    var aux = new Dictionary<String, String>();
+                    aux.Add("Url", item.Link);
+                    aux.Add("Formato", item.Mime.Split('/')[1] == "" ? "jpeg" : item.Mime.Split('/')[1]);
+                    imagens.Add(aux);
+
+                    if (sw.ElapsedMilliseconds > 20000)
+                    {
+                        sw.Stop();
+                        throw new TimeoutException();
+                    }
+                }
+
+                sw.Stop();
+
+                return imagens;
             }
-
-            return imagens;
+            catch (TimeoutException)
+            {
+                return null;
+            }catch (Exception)
+            {
+                return null;
+            }
+            
         }
     }
 }

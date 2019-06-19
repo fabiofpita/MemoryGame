@@ -32,19 +32,40 @@ namespace MemoryGame
 
         private async Task CarregarCartas()
         {
-            await Task.Run(() =>
+            try
             {
-                CartaUtil cartaUtil = new CartaUtil();
-                List<Carta> cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas);
-
-                for (var x = 0; x < cartas.Count; x++)
+                await Task.Run(() =>
                 {
-                    PictureBox picture = (PictureBox)this.Controls.Find("pictureBox_" + cartas[x].Id, false)[0];
+                    CartaUtil cartaUtil = new CartaUtil();
+                    List<Carta> cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas);
 
-                    picture.LoadAsync(cartas[x].Imagem);
-                    picture.SizeMode = PictureBoxSizeMode.StretchImage;
-                }
-            });
+                    if (cartas.Count > 0)
+                    {
+                        for (var x = 0; x < cartas.Count; x++)
+                        {
+                            PictureBox picture = (PictureBox)this.Controls.Find("pictureBox_" + cartas[x].Id, false)[0];
+
+                            picture.Load(cartas[x].Imagem);
+                            picture.SizeMode = PictureBoxSizeMode.StretchImage;
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+
+                });
+                OcultarTelaLoad();
+                this.Show();
+            }
+            catch (Exception)
+            {
+                OcultarTelaLoad();
+                ErroDownload erro = new ErroDownload();
+                erro.Show();
+            }
+            
 
         }
 
@@ -52,7 +73,7 @@ namespace MemoryGame
         {
             Button botao;
             PictureBox picture;
-            for(var x=1; x<=12; x++)
+            for (var x = 1; x <= 12; x++)
             {
                 botao = (Button)this.Controls.Find("button_" + x, false)[0];
                 picture = (PictureBox)this.Controls.Find("pictureBox_" + x, false)[0];
@@ -84,20 +105,7 @@ namespace MemoryGame
             counter++;
             if (counter == 12)
             {
-
-                if (loadingScreen.InvokeRequired)
-                {
-                    loadingScreen.BeginInvoke((MethodInvoker)delegate
-                    {
-                        loadingScreen.Hide();
-                        this.Show();
-                    });
-                }
-                else
-                {
-                    loadingScreen.Hide();
-                    this.Show();
-                }
+                OcultarTelaLoad();
             }
         }
 
@@ -112,5 +120,21 @@ namespace MemoryGame
             Button botao = (Button)this.Controls.Find("button_" + id, false)[0];
             botao.Visible = true;
         }
+
+        private void OcultarTelaLoad()
+        {
+            if (loadingScreen.InvokeRequired)
+            {
+                loadingScreen.BeginInvoke((MethodInvoker)delegate
+                {
+                    loadingScreen.Hide();
+                });
+            }
+            else
+            {
+                loadingScreen.Hide();
+            }
+        }
     }
+
 }

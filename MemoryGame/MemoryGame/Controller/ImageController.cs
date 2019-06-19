@@ -1,4 +1,5 @@
 ﻿using MemoryGame.GoogleAPI;
+using MemoryGame.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,15 @@ namespace MemoryGame.Controller
     {
         public static List<Dictionary<String, String>> GetDadosImagens(string busca, int num)
         {
-            BuscadorImagem buscador = new BuscadorImagem();
-
-            return buscador.Search(busca, num);
+            try
+            {
+                BuscadorImagem buscador = new BuscadorImagem();
+                return buscador.Search(busca, num);
+            }
+            catch (TimeoutException)
+            {
+                return null;
+            }
         }
     }
 }

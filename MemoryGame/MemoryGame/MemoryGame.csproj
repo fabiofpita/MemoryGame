@@ -73,6 +73,12 @@
     <Compile Include="Entidade\Carta.cs" />
     <Compile Include="Entidade\Credencial.cs" />
     <Compile Include="GoogleAPI\BuscadorImagem.cs" />
+    <Compile Include="View\ErroDownload.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ErroDownload.Designer.cs">
+      <DependentUpon>ErroDownload.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\Facil.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     <Compile Include="View\Loading.Designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\ErroDownload.resx">
+      <DependentUpon>ErroDownload.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Facil.resx">
       <DependentUpon>Facil.cs</DependentUpon>
     </EmbeddedResource>
