@@ -22,9 +22,11 @@ namespace MemoryGame
         private Loading loadingScreen;
         private List<Carta> cartas;
         private ControlerGame controler;
-        private Boolean iniciou;
+        private bool iniciou;
         private int segundo;
         private int minuto;
+
+
         public Facil(string tema, int qtdeCartas)
         {
             this.tema = tema;
@@ -45,23 +47,44 @@ namespace MemoryGame
             {
                 CartaUtil cartaUtil = new CartaUtil();
                 cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas);
-                controler = new ControlerGame(cartas);
-                for (var x = 0; x < cartas.Count; x++)
+                if (cartas != null && cartas.Count == this.qtdeCartas)
                 {
-                    PictureBox picture = (PictureBox)this.Controls.Find("pictureBox_" + cartas[x].Id, false)[0];
+                    controler = new ControlerGame(cartas);
+                    for (var x = 0; x < cartas.Count; x++)
+                    {
+                        PictureBox picture = (PictureBox)this.Controls.Find("pictureBox_" + cartas[x].Id, false)[0];
 
-                    picture.LoadAsync(cartas[x].Imagem);
-                    picture.SizeMode = PictureBoxSizeMode.StretchImage;
+                        picture.LoadAsync(cartas[x].Imagem);
+                        picture.SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                }
+                else
+                {
+                    if (loadingScreen.InvokeRequired)
+                    {
+                        loadingScreen.Invoke((MethodInvoker)delegate
+                        {
+                            loadingScreen.Close();
+                            ErroDownload erro = new ErroDownload();
+                            erro.Show();
+                        });
+                    }
+                    else
+                    {
+                        loadingScreen.Close();
+                        ErroDownload erro = new ErroDownload();
+                        erro.Show();
+                    }
+                    
                 }
             });
-
         }
 
         private void OcultarImagens()
         {
             Button botao;
             PictureBox picture;
-            for(var x=1; x<=12; x++)
+            for (var x = 1; x <= 12; x++)
             {
                 botao = (Button)this.Controls.Find("button_" + x, false)[0];
                 picture = (PictureBox)this.Controls.Find("pictureBox_" + x, false)[0];
@@ -74,7 +97,8 @@ namespace MemoryGame
         private void ClickBotao(object sender, EventArgs e)
         {
 
-            if (!iniciou) {
+            if (!iniciou)
+            {
                 timer1.Enabled = true;
                 iniciou = true;
             }
@@ -105,10 +129,14 @@ namespace MemoryGame
             vitoria();
         }
 
-        private void vitoria() {
+        private void vitoria()
+        {
 
-            if (controler.ganhou()) {
+            if (controler.ganhou())
+            {
                 timer1.Stop();
+                Ganhou ganhou = new Ganhou(Contador.Text, Tempo.Text);
+                this.Close();
             }
         }
         private void desabilitarCartas(String img1, String img2)
@@ -142,24 +170,25 @@ namespace MemoryGame
             counter++;
             if (counter == 12)
             {
-
                 if (loadingScreen.InvokeRequired)
                 {
-                    loadingScreen.BeginInvoke((MethodInvoker)delegate
+                    loadingScreen.Invoke((MethodInvoker)delegate
                     {
-                        loadingScreen.Hide();
+                        loadingScreen.Close();
                         this.Show();
                     });
                 }
                 else
                 {
-                    loadingScreen.Hide();
+                    loadingScreen.Close();
                     this.Show();
                 }
+                
             }
         }
 
-        private void atualizarJogadas(int valor) {
+        private void atualizarJogadas(int valor)
+        {
             Label variavel = (Label)this.Controls.Find("Contador", false)[0];
             variavel.Text = Convert.ToString(valor);
         }
@@ -187,17 +216,22 @@ namespace MemoryGame
             {
                 tempoSeg = "0" + segundo;
             }
-            else if (segundo == 60) {
+            else if (segundo == 60)
+            {
                 tempoSeg = "00";
                 segundo = 0;
                 minuto += 1;
             }
 
-            if (minuto < 10) {
+            if (minuto < 10)
+            {
                 tempoMin = "0" + minuto;
             }
 
             Tempo.Text = tempoMin + ":" + tempoSeg;
         }
+
     }
+
+
 }

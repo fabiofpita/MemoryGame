@@ -38,7 +38,7 @@ namespace MemoryGame.Controller
                         {
                             aux = new Carta();
                             aux.Id = x + 1;
-                            aux.Imagem = @"temp\imagem" + (x + 1) + "." + imagens[x]["Formato"];
+                            aux.Imagem = @"temp\imagem" + (x + 1) + imagens[x]["Formato"];
                             aux.IdPar = x + 1;
 
                             copia = new Carta();
@@ -86,7 +86,7 @@ namespace MemoryGame.Controller
                 {
                     using (WebClient client = new WebClient())
                     {
-                        client.DownloadFile(new Uri(dado["Url"]), "temp/imagem" + counter + "." + dado["Formato"]);
+                        client.DownloadFile(new Uri(dado["Url"]), "temp/imagem" + counter + dado["Formato"]);
                     }
                     counter++;
                     if (sw.ElapsedMilliseconds > 20000)

@@ -41,24 +41,47 @@ namespace MemoryGame.GoogleAPI
 
                 var lisRequest = service.Cse.List(query);
                 lisRequest.Cx = credenciais.CustomSearchId;
-                lisRequest.Num = qtdeResultado;
+                lisRequest.Num = 10;
+                lisRequest.FileType = "jpeg";
                 lisRequest.SearchType = CseResource.ListRequest.SearchTypeEnum.Image;
-                lisRequest.ImgSize = CseResource.ListRequest.ImgSizeEnum.Xlarge;
+                //lisRequest.ImgSize = CseResource.ListRequest.ImgSizeEnum.Xlarge;
                 var results = lisRequest.Execute();
 
                 List<Dictionary<String, String>> imagens = new List<Dictionary<String, String>>();
                 foreach (Result item in results.Items)
                 {
-                    var aux = new Dictionary<String, String>();
-                    aux.Add("Url", item.Link);
-                    aux.Add("Formato", item.Mime.Split('/')[1] == "" ? "jpeg" : item.Mime.Split('/')[1]);
-                    imagens.Add(aux);
-
-                    if (sw.ElapsedMilliseconds > 20000)
+                    if(imagens.Count >= qtdeResultado)
                     {
-                        sw.Stop();
-                        throw new TimeoutException();
+                        break;
                     }
+
+                    var aux = new Dictionary<String, String>();
+                    string formato = "";
+
+                    if (item.Link.EndsWith(".jpg"))
+                    {
+                        formato = ".jpg";
+                    }
+                    else if (item.Link.EndsWith(".jpeg"))
+                    {
+                        formato = ".jpeg";
+                    }
+                    else if (item.Link.EndsWith(".png"))
+                    {
+                        formato = ".png";
+                    }
+                    else if (item.Link.EndsWith(".bmp"))
+                    {
+                        formato = ".bmp";
+                    }
+
+                    if (!String.IsNullOrWhiteSpace(formato))
+                    {
+                        aux.Add("Url", item.Link);
+                        aux.Add("Formato", formato);
+                        imagens.Add(aux);
+                    }
+
                 }
 
                 sw.Stop();
@@ -68,11 +91,13 @@ namespace MemoryGame.GoogleAPI
             catch (TimeoutException)
             {
                 return null;
-            }catch (Exception)
+            }
+            catch (Exception ex)
             {
+                Console.Write(ex.StackTrace.ToString());
                 return null;
             }
-            
+
         }
     }
 }
