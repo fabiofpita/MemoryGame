@@ -13,62 +13,73 @@ using System.Drawing;
 using System.Reflection;
 using MemoryGame.View;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace MemoryGame.Controller
 {
     class FabricaCarta
     {
-        public static List<Carta> GetCartas(string tema, int qtdeCartas)
+        private static Random rng = new Random();
+        public static List<Carta> GetCartas(string tema, int qtdeCartas, bool off)
         {
 
             List<Carta> cartas;
             Carta aux;
             Carta copia;
+            cartas = new List<Carta>();
             List<Dictionary<String, String>> imagens = null;
-            try
+            if (!off)
             {
-                imagens = ImageController.GetDadosImagens(tema, qtdeCartas / 2);
-                cartas = new List<Carta>();
-                if (imagens != null)
+                try
                 {
-                    int retorno = SalvarImagens(imagens);
-                    if (retorno == 0)
+                    imagens = ImageController.GetDadosImagens(tema, qtdeCartas / 2);
+                    if (imagens != null)
                     {
-                        for (int x = 0; x < imagens.Count; x++)
+                        List<Image> retorno = SalvarImagens(imagens);
+                        if (retorno != null)
                         {
-                            aux = new Carta();
-                            aux.Id = x + 1;
-                            aux.Imagem = @"temp\imagem" + (x + 1) + imagens[x]["Formato"];
-                            aux.IdPar = x + 1;
+                            for (int x = 0; x < imagens.Count; x++)
+                            {
+                                aux = new Carta();
+                                aux.Id = x + 1;
+                                aux.Imagem = retorno[x];
+                                aux.IdPar = x + 1;
 
-                            copia = new Carta();
-                            copia.Imagem = aux.Imagem;
-                            copia.IdPar = x + 1;
-                            copia.Id = (x + 1) + imagens.Count;
+                                copia = new Carta();
+                                copia.Imagem = aux.Imagem;
+                                copia.IdPar = x + 1;
+                                copia.Id = (x + 1) + imagens.Count;
 
-                            cartas.Add(aux);
-                            cartas.Add(copia);
+                                cartas.Add(aux);
+                                cartas.Add(copia);
+                            }
+                            Random rnd = new Random();
+
+                            EmbaralharCartas(cartas);
+
                         }
-                        Random rnd = new Random();
-
-                        cartas = cartas.OrderBy(x => rnd.Next()).ToList();
-
                     }
                 }
+                catch (TimeoutException)
+                {
+                    cartas = new List<Carta>();
+                }
             }
-            catch (TimeoutException)
+            else
             {
-                cartas = new List<Carta>();
+
             }
+            
 
             return cartas;
         }
 
 
-        private static int SalvarImagens(List<Dictionary<String, String>> imagens)
+        private static List<Image> SalvarImagens(List<Dictionary<String, String>> imagens)
         {
             try
             {
+                List<Image> listaImagens = new List<Image>();
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
 
@@ -78,15 +89,17 @@ namespace MemoryGame.Controller
                     Directory.CreateDirectory(@"temp");
                 }
 
-                string url;
-                HttpWebRequest request;
-                string basePath = @"temp"; // Change accordingly...
-
                 foreach (Dictionary<String, String> dado in imagens)
                 {
                     using (WebClient client = new WebClient())
                     {
-                        client.DownloadFile(new Uri(dado["Url"]), "temp/imagem" + counter + dado["Formato"]);
+                        //client.DownloadFile(new Uri(dado["Url"]), "temp/imagem" + counter + dado["Formato"]);
+                        byte[] imagem = client.DownloadData(dado["Url"]);
+
+                        using(var ms = new MemoryStream(imagem))
+                        {
+                            listaImagens.Add(Image.FromStream(ms));
+                        }
                     }
                     counter++;
                     if (sw.ElapsedMilliseconds > 20000)
@@ -98,22 +111,40 @@ namespace MemoryGame.Controller
                 sw.Stop();
                 sw.Reset();
 
+                return listaImagens;
             }
             catch (ExternalException)
             {
-                return 1;
+                return null;
             }
             catch (ArgumentNullException)
             {
-                return 2;
+                return null;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace);
-                return 3;
+                return null;
             }
+        }
 
-            return 0;
+        private static void EmbaralharCartas(List<Carta> list)
+        {
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            int n = list.Count;
+            while (n > 1)
+            {
+                byte[] box = new byte[1];
+                do provider.GetBytes(box);
+                while (!(box[0] < n * (Byte.MaxValue / n)));
+                int k = (box[0] % n);
+                n--;
+                Carta value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
+
+    
 }

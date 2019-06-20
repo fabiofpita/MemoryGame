@@ -50,38 +50,14 @@ namespace MemoryGame.GoogleAPI
                 List<Dictionary<String, String>> imagens = new List<Dictionary<String, String>>();
                 foreach (Result item in results.Items)
                 {
-                    if(imagens.Count >= qtdeResultado)
+                    if (imagens.Count >= qtdeResultado)
                     {
                         break;
                     }
 
                     var aux = new Dictionary<String, String>();
-                    string formato = "";
-
-                    if (item.Link.EndsWith(".jpg"))
-                    {
-                        formato = ".jpg";
-                    }
-                    else if (item.Link.EndsWith(".jpeg"))
-                    {
-                        formato = ".jpeg";
-                    }
-                    else if (item.Link.EndsWith(".png"))
-                    {
-                        formato = ".png";
-                    }
-                    else if (item.Link.EndsWith(".bmp"))
-                    {
-                        formato = ".bmp";
-                    }
-
-                    if (!String.IsNullOrWhiteSpace(formato))
-                    {
-                        aux.Add("Url", item.Link);
-                        aux.Add("Formato", formato);
-                        imagens.Add(aux);
-                    }
-
+                    aux.Add("Url", item.Link);
+                    imagens.Add(aux);
                 }
 
                 sw.Stop();

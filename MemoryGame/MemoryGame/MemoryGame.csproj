@@ -74,6 +74,12 @@
     <Compile Include="Entidade\Carta.cs" />
     <Compile Include="Entidade\Credencial.cs" />
     <Compile Include="GoogleAPI\BuscadorImagem.cs" />
+    <Compile Include="View\Dificil.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Dificil.Designer.cs">
+      <DependentUpon>Dificil.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\ErroDownload.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,15 @@
     <Compile Include="View\Loading.Designer.cs">
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\Medio.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Medio.Designer.cs">
+      <DependentUpon>Medio.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="View\Dificil.resx">
+      <DependentUpon>Dificil.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\ErroDownload.resx">
       <DependentUpon>ErroDownload.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +147,9 @@
     </Content>
     <EmbeddedResource Include="View\Loading.resx">
       <DependentUpon>Loading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Medio.resx">
+      <DependentUpon>Medio.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

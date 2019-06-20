@@ -40,8 +40,8 @@ namespace MemoryGame
             this.label2 = new System.Windows.Forms.Label();
             this.btnJogar = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.chkOff = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
-            
             // 
             // label1
             // 
@@ -56,7 +56,7 @@ namespace MemoryGame
             // rblFacil
             // 
             this.rblFacil.AutoSize = true;
-            this.rblFacil.Location = new System.Drawing.Point(260, 289);
+            this.rblFacil.Location = new System.Drawing.Point(274, 339);
             this.rblFacil.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.rblFacil.Name = "rblFacil";
             this.rblFacil.Size = new System.Drawing.Size(62, 25);
@@ -68,7 +68,7 @@ namespace MemoryGame
             // rblMedio
             // 
             this.rblMedio.AutoSize = true;
-            this.rblMedio.Location = new System.Drawing.Point(260, 324);
+            this.rblMedio.Location = new System.Drawing.Point(274, 374);
             this.rblMedio.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.rblMedio.Name = "rblMedio";
             this.rblMedio.Size = new System.Drawing.Size(70, 25);
@@ -80,7 +80,7 @@ namespace MemoryGame
             // rblDificil
             // 
             this.rblDificil.AutoSize = true;
-            this.rblDificil.Location = new System.Drawing.Point(260, 359);
+            this.rblDificil.Location = new System.Drawing.Point(274, 409);
             this.rblDificil.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.rblDificil.Name = "rblDificil";
             this.rblDificil.Size = new System.Drawing.Size(71, 25);
@@ -112,7 +112,7 @@ namespace MemoryGame
             this.btnJogar.BackColor = System.Drawing.Color.White;
             this.btnJogar.Font = new System.Drawing.Font("SF Slapstick Comic", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnJogar.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnJogar.Location = new System.Drawing.Point(238, 439);
+            this.btnJogar.Location = new System.Drawing.Point(249, 462);
             this.btnJogar.Name = "btnJogar";
             this.btnJogar.Size = new System.Drawing.Size(121, 47);
             this.btnJogar.TabIndex = 6;
@@ -134,12 +134,23 @@ namespace MemoryGame
             this.btnClose.UseVisualStyleBackColor = false;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // chkOff
+            // 
+            this.chkOff.AutoSize = true;
+            this.chkOff.Location = new System.Drawing.Point(217, 272);
+            this.chkOff.Name = "chkOff";
+            this.chkOff.Size = new System.Drawing.Size(130, 25);
+            this.chkOff.TabIndex = 8;
+            this.chkOff.Text = "JOGAR OFFLINE";
+            this.chkOff.UseVisualStyleBackColor = true;
+            // 
             // Inicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Yellow;
             this.ClientSize = new System.Drawing.Size(650, 585);
+            this.Controls.Add(this.chkOff);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnJogar);
             this.Controls.Add(this.label2);
@@ -155,7 +166,7 @@ namespace MemoryGame
             this.Name = "Inicio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Jogo da Memória";
-            this.Paint += new PaintEventHandler(this.Inicio_Paint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Inicio_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -171,6 +182,7 @@ namespace MemoryGame
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnJogar;
         private System.Windows.Forms.Button btnClose;
+        private CheckBox chkOff;
     }
 }
 

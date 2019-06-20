@@ -1,5 +1,6 @@
 ﻿using MemoryGame.Controller;
 using MemoryGame.GoogleAPI;
+using MemoryGame.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -38,7 +39,13 @@ namespace MemoryGame
                 this.Hide();
                 if (rblFacil.Checked)
                 {
-                    Facil facil = new Facil(txtTema.Text, 12);
+                    Facil facil = new Facil(txtTema.Text, 12, this.chkOff.Checked);
+                }else if (rblMedio.Checked)
+                {
+                    Medio medio = new Medio(txtTema.Text, 16, this.chkOff.Checked);
+                }else if (rblDificil.Checked)
+                {
+                    Dificil dificil = new Dificil(txtTema.Text, 20, this.chkOff.Checked);
                 }
             }
         }

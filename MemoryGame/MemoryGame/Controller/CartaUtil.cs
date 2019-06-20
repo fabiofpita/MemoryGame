@@ -9,9 +9,9 @@ namespace MemoryGame.Controller
 {
     class CartaUtil
     {
-        public List<Carta> GetCartas(string tema, int qtdeCartas)
+        public List<Carta> GetCartas(string tema, int qtdeCartas, bool off)
         {
-            return FabricaCarta.GetCartas(tema, qtdeCartas);
+            return FabricaCarta.GetCartas(tema, qtdeCartas, off);
         }
     }
 }

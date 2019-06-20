@@ -12,6 +12,7 @@ namespace MemoryGame.Controller
     class ControlerGame
     {
         private int valores;
+        private int jogadas;
         private Carta escolha1;
         private Carta escolha2;
         private Carta resposta;
@@ -21,14 +22,15 @@ namespace MemoryGame.Controller
             escolha2 = null;
             this.cartas = cartas;
             valores = 0;
+            jogadas = 0;
         }
 
         //Retornos
         // True - Trava a carta e desabilita o botao
         // False - Destrava a primeira carta
-        public Boolean selecionouImagem(int cartaEscolhida) {
+        public bool selecionouImagem(int cartaEscolhida) {
 
-            Boolean retorno = true;
+            bool retorno = true;
 
             if (escolha1 == null)
             {
@@ -39,25 +41,29 @@ namespace MemoryGame.Controller
                 escolha2 = getCarta(cartaEscolhida);
                 if (escolha1.Id != escolha2.Id)
                 {
-                    if (escolha1.IdPar != escolha2.IdPar)
+                    if (escolha1.IdPar == escolha2.IdPar)
+                    {
+                        valores += 2;
+
+                    }
+                    else
                     {
                         retorno = false;
-                    }
+                    }                  
                 }
                 escolha2 = null;
                 escolha1 = null;
-                valores += 2;
             }
-
             return retorno;
         }
 
-        public Boolean ganhou() {
-            return ((valores * 2) == cartas.Count());
+        public bool ganhou() {
+            return valores == cartas.Count();
         }
 
         public int getJogadas() {
-            return valores;
+            jogadas++;
+            return jogadas;
         }
 
         public Carta getResposta() {
@@ -65,7 +71,7 @@ namespace MemoryGame.Controller
         }
 
         private Carta getCarta(int id) {
-            return cartas.Find(x => x.Id ==id); 
+            return cartas.Find(x => x.Id == id); 
         }
 
         public void pause() {

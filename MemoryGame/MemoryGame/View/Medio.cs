@@ -1,6 +1,5 @@
 ﻿using MemoryGame.Controller;
 using MemoryGame.Entidade;
-using MemoryGame.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,26 +7,24 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MemoryGame
+namespace MemoryGame.View
 {
-    public partial class Facil : Form
+    public partial class Medio : Form
     {
         private string tema;
         private int qtdeCartas;
         private bool off;
+        private static int counter = 0;
         private Loading loadingScreen;
         private List<Carta> cartas;
         private ControlerGame controler;
         private bool iniciou;
         private int segundo;
         private int minuto;
-
-
-        public Facil(string tema, int qtdeCartas, bool off)
+        public Medio(string tema, int qtdeCartas, bool off)
         {
             this.tema = tema;
             this.qtdeCartas = qtdeCartas;
@@ -47,7 +44,7 @@ namespace MemoryGame
             await Task.Run(() =>
             {
                 CartaUtil cartaUtil = new CartaUtil();
-                cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas);
+                cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas, this.off);
                 if (cartas != null && cartas.Count == this.qtdeCartas)
                 {
                     controler = new ControlerGame(cartas);
@@ -248,6 +245,5 @@ namespace MemoryGame
         }
 
     }
-
-
 }
+
