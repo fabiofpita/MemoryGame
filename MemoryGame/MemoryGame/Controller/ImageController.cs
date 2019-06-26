@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,18 +28,19 @@ namespace MemoryGame.Controller
         public static List<Image> GetImagensOffline(int qtdeCartas)
         {
             List<Image> imagens = new List<Image>();
-            DirectoryInfo Dir = new DirectoryInfo(@"Imagens");
-            FileInfo[] Files = Dir.GetFiles("*", SearchOption.AllDirectories);
-            int counter = 1;
-            foreach (FileInfo File in Files)
-            {
-                imagens.Add(Image.FromFile(File.FullName));
 
-                if (counter == qtdeCartas/2) break;
+            imagens.Add(MemoryGame.Properties.Resources.imagem1);
+            imagens.Add(MemoryGame.Properties.Resources.imagem2);
+            imagens.Add(MemoryGame.Properties.Resources.imagem3);
+            imagens.Add(MemoryGame.Properties.Resources.imagem4);
+            imagens.Add(MemoryGame.Properties.Resources.imagem5);
+            imagens.Add(MemoryGame.Properties.Resources.imagem6);
+            imagens.Add(MemoryGame.Properties.Resources.imagem7);
+            imagens.Add(MemoryGame.Properties.Resources.imagem8);
+            imagens.Add(MemoryGame.Properties.Resources.imagem9);
+            imagens.Add(MemoryGame.Properties.Resources.imagem10);
 
-                counter++;
-            }
-            
+            imagens = imagens.Take(qtdeCartas/2).ToList();
 
             return imagens;
         }

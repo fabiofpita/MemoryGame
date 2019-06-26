@@ -101,10 +101,6 @@ namespace MemoryGame.Controller
                 sw.Start();
 
                 int counter = 1;
-                if (!Directory.Exists(@"temp"))
-                {
-                    Directory.CreateDirectory(@"temp");
-                }
 
                 foreach (Dictionary<String, String> dado in imagens)
                 {
