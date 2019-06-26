@@ -53,7 +53,6 @@ namespace MemoryGame.Controller
                                 cartas.Add(aux);
                                 cartas.Add(copia);
                             }
-                            Random rnd = new Random();
 
                             EmbaralharCartas(cartas);
 
@@ -67,7 +66,25 @@ namespace MemoryGame.Controller
             }
             else
             {
+                List<Image> imagensOff = ImageController.GetImagensOffline(qtdeCartas);
 
+                for (int x = 0; x < imagensOff.Count; x++)
+                {
+                    aux = new Carta();
+                    aux.Id = x + 1;
+                    aux.Imagem = imagensOff[x];
+                    aux.IdPar = x + 1;
+
+                    copia = new Carta();
+                    copia.Imagem = aux.Imagem;
+                    copia.IdPar = x + 1;
+                    copia.Id = (x + 1) + imagensOff.Count;
+
+                    cartas.Add(aux);
+                    cartas.Add(copia);
+                }
+
+                EmbaralharCartas(cartas);
             }
             
 

@@ -29,7 +29,7 @@ namespace MemoryGame
 
         private void btnJogar_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(txtTema.Text))
+            if (String.IsNullOrWhiteSpace(txtTema.Text) && !chkOff.Checked)
             {
                 focus = true;
                 this.Refresh();
@@ -67,5 +67,9 @@ namespace MemoryGame
             }
         }
 
+        private void chkOff_CheckedChanged(object sender, EventArgs e)
+        {
+            txtTema.Enabled = !chkOff.Checked;
+        }
     }
 }

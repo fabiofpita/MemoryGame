@@ -47,7 +47,7 @@ namespace MemoryGame
             await Task.Run(() =>
             {
                 CartaUtil cartaUtil = new CartaUtil();
-                cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas, false);
+                cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas, this.off);
                 if (cartas != null && cartas.Count == this.qtdeCartas)
                 {
                     controler = new ControlerGame(cartas);

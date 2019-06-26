@@ -143,6 +143,7 @@ namespace MemoryGame
             this.chkOff.TabIndex = 8;
             this.chkOff.Text = "JOGAR OFFLINE";
             this.chkOff.UseVisualStyleBackColor = true;
+            this.chkOff.CheckedChanged += new System.EventHandler(this.chkOff_CheckedChanged);
             // 
             // Inicio
             // 
