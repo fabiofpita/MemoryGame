@@ -131,14 +131,13 @@ namespace MemoryGame.View
             picture.Visible = true;
             picture.Enabled = false;
 
-
+            atualizarJogadas(controler.getJogadas());
 
             Refresh();
             if (!controler.selecionouImagem(Convert.ToInt32(id)))
             {
 
                 id1 = controler.getResposta().Id;
-                atualizarJogadas(controler.getJogadas());
 
                 controler.pause();
 

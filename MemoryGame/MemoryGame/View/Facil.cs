@@ -47,7 +47,7 @@ namespace MemoryGame
             await Task.Run(() =>
             {
                 CartaUtil cartaUtil = new CartaUtil();
-                cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas);
+                cartas = cartaUtil.GetCartas(this.tema, this.qtdeCartas, false);
                 if (cartas != null && cartas.Count == this.qtdeCartas)
                 {
                     controler = new ControlerGame(cartas);
@@ -134,20 +134,19 @@ namespace MemoryGame
             picture.Visible = true;
             picture.Enabled = false;
 
-
+            atualizarJogadas(controler.getJogadas());
 
             Refresh();
             if (!controler.selecionouImagem(Convert.ToInt32(id)))
             {
 
                 id1 = controler.getResposta().Id;
-                atualizarJogadas(controler.getJogadas());
 
                 controler.pause();
 
                 desabilitarCartas(id, id1);
             }
-
+            
             vitoria();
         }
 
